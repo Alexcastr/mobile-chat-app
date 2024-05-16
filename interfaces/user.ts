@@ -2,8 +2,9 @@ export interface User {
   email: string;
   password: string;
   username: string;
+  profileUrl?: string;
   rol?: UserRole;
-  id:string
+  uid:string
 }
 
 // create a enum for the user roles, SUPER_ADMIN, ADMIN, USER

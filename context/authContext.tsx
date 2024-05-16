@@ -12,7 +12,7 @@ export const AuthContext = createContext({
   login: async (email: string, password: string) => {
     return { success: false, data: null } as { success: boolean; data: FirebaseUser | string | null };
   },
-  register: async (email: string, password: string, username: string) => {
+  register: async (email: string, password: string, username: string, profileUrl:string) => {
     return { success: false, data: null } as { success: boolean; data: FirebaseUser | string | null};
   },
   logout: async () => {
@@ -40,8 +40,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           email: firebaseUser.email || "", // Firebase user might not have email
           password: "", // Password is not available from Firebase user object
           // You can set default or undefined values for other fields if needed
-          rol: UserRole.USER, // Assuming a default role
-          id: firebaseUser.uid
+          rol: UserRole.USER, // Assuming a default role,
+          profileUrl: firebaseUser.photoURL || "", // Firebase user might not have photoURL
+          uid: firebaseUser.uid
         };
         setUser(mappedUser);
         updateUserData(firebaseUser.uid);
@@ -96,7 +97,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
   
 
-  const register = async (email:string, password: string, username: string) => {
+  const register = async (email:string, password: string, username: string, profileUrl:string) => {
     try {
       if (email && password && username) {
         const response = await createUserWithEmailAndPassword(
@@ -114,6 +115,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
             username,
             email,
             rol: UserRole.USER,
+            profileUrl: profileUrl || "",
           });
   
           return { success: true, data: response.user };
@@ -151,7 +153,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         email: data.email,
         rol: data.rol,
         password : "",
-        id: uid
+        profileUrl: data.profileUrl,
+        uid: uid
       });
     }
   }

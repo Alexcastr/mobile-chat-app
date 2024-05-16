@@ -18,6 +18,7 @@ const SignUp = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const usernameRef = useRef("");
+  const profileRef = useRef("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -27,7 +28,7 @@ const SignUp = () => {
       return;
     }
     setLoading(true);
-    let response = await register(emailRef.current, passwordRef.current, usernameRef.current);
+    let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current);
     // console.log("response", response);
     setLoading(false);
     if(!response.success) {
@@ -97,6 +98,20 @@ const SignUp = () => {
                 className="flex-1 font-bold text-neutral-700"
                 placeholderTextColor={'gray'}
                 secureTextEntry={true}
+              />
+            </View>
+            <View
+              className="flex-row gap-4 px-4 bg-neutral-100 items-center rounded-2xl"
+              style={{ height: hp(7) }}
+            >
+              <Octicons name="lock" size={hp(2.7)} color="gray" />
+              <TextInput
+                onChangeText={(value) => (profileRef.current = value)}
+                placeholder="profile image url"
+                style={{ fontSize: hp(2.2) }}
+                className="flex-1 font-bold text-neutral-700"
+                placeholderTextColor={'gray'}
+        
               />
             </View>
 
