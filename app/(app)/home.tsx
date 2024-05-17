@@ -13,18 +13,13 @@ import { getDocs, query, where } from 'firebase/firestore';
 import { usersRef } from '@/firebase-config';
 const Home = () => {
   const {  user } = useAuth();
-  // console.log("el user", user)
+  
 
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    if(user?.uid) getUsers();
-
-
-  } ,[]);
-
+  
   async function getUsers() {
-    const q =  query(usersRef, where('rol', '==', user?.rol));
+    const q =  query(usersRef, where('email', '!=', user?.email));
     const querySnapshot = await getDocs(q);
     let data: User[] = [];
     querySnapshot.forEach((doc) => {
@@ -34,6 +29,14 @@ const Home = () => {
     // console.log('gou users', data);
     setUsers(data);
   }
+
+    
+  useEffect(() => {
+    if (user?.uid) {
+      getUsers();
+    }
+  }, [user]); // Ejecutar getUsers cuando user cambie
+  
   return (
     <View className="flex-1 bg-white">
      <StatusBar style="auto" />

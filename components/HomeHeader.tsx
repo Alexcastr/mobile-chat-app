@@ -19,7 +19,9 @@ const ios = Platform.OS === 'ios';
 
 const HomeHeader = () => {
 
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const source = user?.profileUrl ? { uri: user?.profileUrl } : require('@/assets/empty_avatar.webp');
+
 
   async function handleLogout() {
     await logout();
@@ -39,7 +41,7 @@ const HomeHeader = () => {
       <MenuTrigger >
         <Image
         style={{height: hp(4.3), aspectRatio:1, borderRadius: 100 }}
-        source="https://picsum.photos/seed/696/3000/2000"
+        source={source}
         placeholder={{ blurhash }}
         contentFit="cover"
         transition={1000}
