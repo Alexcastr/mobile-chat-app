@@ -38,8 +38,10 @@ const ChatRoom = () => {
     const messageRef = collection(docRef, 'messages');
     const q = query(messageRef, orderBy('createdAt', 'asc'));
 
-    let unsub = onSnapshot(q, (snapshot)=>{
-      let allMessages = snapshot.docs.map((doc) => doc.data());
+    let unsub = onSnapshot(q, (snapshot) => {
+      let allMessages = snapshot.docs.map((doc) => {
+        return doc.data();
+      });
       setMessages([...allMessages]);
     });
 
@@ -67,14 +69,14 @@ const ChatRoom = () => {
      if(inputRef.current) inputRef?.current.clear();
 
       const newDoc = await addDoc(messageRef, {
-        userId: user?.uid,
+        uid: user?.uid,
         text: message,
         profileUrl: user?.profileUrl,
         sendName: user?.username,
         createdAt: Timestamp.fromDate(new Date())
       });
 
-      console.log('Document written with ID: ', newDoc.id);
+      // console.log("Document messages", user);
 
       // console.log('Document written with ID: ', newDoc.id);
     } catch (error: any) {

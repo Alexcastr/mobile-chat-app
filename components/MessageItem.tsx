@@ -12,8 +12,8 @@ interface Props {
 
 const MessageItem: React.FC<Props> = ({ message, currentUser }) => {
 
-
-  if (currentUser?.uid == message.userId) {
+  console.log("message", message, "currentUser", currentUser)
+  if (currentUser?.username != message?.sendName) {
     // Mensaje del usuario actual
     return (
       <View className="flex-row justify-end mb-3 mr-3">
@@ -32,7 +32,7 @@ const MessageItem: React.FC<Props> = ({ message, currentUser }) => {
     return (
       <View style={{ width: wp(80) }} className="ml-3 mb-3">
         <View className="flex self-start p-3 px-4 rounded-2xl bg-indigo-100 border border-indigo-300">
-          <Text style={{ fontSize: hp(1.9) }}>common</Text>
+          <Text style={{ fontSize: hp(1.9) }}>{message.text}</Text>
         </View>
       </View>
     );

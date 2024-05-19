@@ -171,6 +171,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 export const useAuth = () => {
   const value = useContext(AuthContext);
 
+  // console.log("value from useAuth", value)
+
   if(!value) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
